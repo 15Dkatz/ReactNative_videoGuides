@@ -1,12 +1,12 @@
-// https://www.eventbriteapi.com/v3/users/me/?token=SESXYS4X3FJ5LHZRWGKQ
-
 import React, { Component } from 'react';
 import {
   Text,
+  TextInput,
   View,
   StyleSheet,
   ListView,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native';
 
 const API_KEY = 'Bearer SZRBEN2CGEUPT57YVMXP';
@@ -23,7 +23,9 @@ module.exports = React.createClass({
           },
           url: 'www.eventone.com'
         }
-      ])
+      ]),
+      eventType: '',
+      city: ''
     })
   },
 
@@ -78,6 +80,25 @@ module.exports = React.createClass({
         <Text style={styles.title}>
           Event Expert
         </Text>
+        <View style={styles.form}>
+          <TextInput
+            style={styles.input}
+            placeholder='kind of event...'
+            onChangeText={(text) => this.setState({eventType: text})}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder='city...'
+            onChangeText={(text) => this.setState({city: text})}
+          />
+          <TouchableOpacity style={styles.buttonContainer}
+            onPress={()=>this.searchEvents(this.state.eventType, this.state.city)}
+          >
+            <Text style={styles.button}>
+              Search
+            </Text>
+          </TouchableOpacity>
+        </View>
         <ListView
           style={styles.list}
           dataSource={this.state.dataSource}
@@ -95,6 +116,9 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     marginTop: 40
+  },
+  form: {
+    flex: 3
   },
   list: {
     flex: 8
@@ -115,5 +139,26 @@ const styles = StyleSheet.create({
     height: 50,
     borderColor: '#000',
     borderWidth: 1
+  },
+  input: {
+    flex: 1,
+    borderColor: '#000',
+    borderRadius: 5,
+    borderWidth: 1,
+    margin: 5,
+    textAlign: 'center'
+  },
+  buttonContainer: {
+    flex: 1,
+    padding: 5
+  },
+  button: {
+    flex: 1,
+    borderColor: '#0000FF',
+    borderRadius: 5,
+    borderWidth: 1,
+    textAlign: 'center',
+    padding: 10,
+    color: '#0000FF'
   }
 })
