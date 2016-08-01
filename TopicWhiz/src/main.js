@@ -3,19 +3,17 @@ import {
   Navigator
 } from 'react-native';
 
-import events from './components/events';
-import event_detail from './components/event-detail';
+import signIn from './components/signIn';
 
 const routes = {
-  events,
-  event_detail
+  signIn
 }
 
 module.exports = React.createClass({
   render() {
     return (
       <Navigator
-        initialRoute={{name: 'events'}}
+        initialRoute={{name: 'signIn'}}
         renderScene={this.renderScene}
       />
     )
@@ -23,14 +21,9 @@ module.exports = React.createClass({
 
   renderScene(route, navigator) {
     let Component = routes[route.name];
-    let { title, description, url, img } = route;
     return (
       <Component
         navigator={navigator}
-        title={title}
-        description={description}
-        url={url}
-        img={img}
       />
     )
   }
