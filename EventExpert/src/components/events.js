@@ -16,21 +16,14 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1!==r2});
 module.exports = React.createClass({
   getInitialState() {
     return ({
-      dataSource: ds.cloneWithRows([
-        {
-          name: {
-            text: 'Event 1'
-          },
-          url: 'www.eventone.com'
-        }
-      ]),
+      dataSource: ds.cloneWithRows([]),
       eventType: '',
       city: ''
     })
   },
 
   componentDidMount() {
-    this.searchEvents('hackathon', 'San Francisco');
+    // this.searchEvents('hackathon', 'San Francisco');
   },
 
   searchEvents(category, city) {
