@@ -49,6 +49,16 @@ module.exports = React.createClass({
     });
   },
 
+  detail(rowData) {
+    this.props.navigator.push({
+      name: 'eventDetail',
+      title: rowData.name.text,
+      description: rowData.description.text,
+      url: rowData.url,
+      img: rowData.logo.url
+    })
+  },
+
   renderRow(rowData) {
     const defaultImg = 'https://pixabay.com/static/uploads/photo/2014/08/21/19/43/question-423604__180.png';
     let img = rowData.logo != null ? rowData.logo.url : defaultImg;
@@ -66,10 +76,13 @@ module.exports = React.createClass({
               rowData.name.text
             }
           </Text>
-          <Toucha
-          <Text>
-            more details
-          </Text>
+          <TouchableOpacity
+            onPress={() => this.detail(rowData)}
+          >
+            <Text style={styles.link}>
+              more details
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     )
@@ -92,8 +105,9 @@ module.exports = React.createClass({
             placeholder='city...'
             onChangeText={(text) => this.setState({city: text})}
           />
-          <TouchableOpacity style={styles.buttonContainer}
-            onPress={()=>this.searchEvents(this.state.eventType, this.state.city)}
+          <TouchableOpacity
+            onPress={() => this.searchEvents(this.state.eventType, this.state.city)}
+            style={styles.buttonContainer}
           >
             <Text style={styles.button}>
               Search
@@ -121,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   form: {
-    flex: 4
+    flex: 4,
   },
   list: {
     flex: 10
@@ -162,6 +176,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     textAlign: 'center',
     padding: 10,
+    color: '#0000FF'
+  },
+  link: {
     color: '#0000FF'
   }
 })

@@ -3,12 +3,12 @@ import {
   Navigator
 } from 'react-native';
 
-import events from './components/events';
-import event_detail from './components/event-detail';
+import Events from './components/events';
+import EventDetail from './components/event_detail';
 
 const routes = {
-  events,
-  event_detail
+  events: Events,
+  eventDetail: EventDetail
 }
 
 module.exports = React.createClass({
@@ -23,7 +23,9 @@ module.exports = React.createClass({
 
   renderScene(route, navigator) {
     let Component = routes[route.name];
+
     let { title, description, url, img } = route;
+
     return (
       <Component
         navigator={navigator}
