@@ -16,18 +16,25 @@ module.exports = React.createClass({
       lastName: '',
       email: '',
       password: '',
+      confirmPassword: '',
       result: ''
     })
   },
 
   //when we create the user, the mounted signIn component gets recognized
   signUp() {
-    let {email, password} = this.state;
-    firebaseApp.auth().createUserWithEmailAndPassword(email, password).catch(error => {
-      // Handle Errors here.
-      console.log('errorCode', error.code, 'errorMessage', error.message);
-      this.setState({result: error.message});
-    });
+    let {email, password, confirmPassword} = this.state;
+    if (password != confirmPassword) {
+      this.setState({
+        result: 'Password and confirmation password must match.'
+      })
+    } else {
+      firebaseApp.auth().createUserWithEmailAndPassword(email, password).catch(error => {
+        // Handle Errors here.
+        console.log('errorCode', error.code, 'errorMessage', error.message);
+        this.setState({result: error.message});
+      });
+    }
   },
 
   render() {
@@ -50,6 +57,16 @@ module.exports = React.createClass({
           onChangeText={(text)=>{
             this.setState({
               password: text
+            })
+          }}
+        />
+        <TextInput
+          placeholder='Confirm your password'
+          style={styles.input}
+          secureTextEntry={true}
+          onChangeText={(text)=>{
+            this.setState({
+              confirmPassword: text
             })
           }}
         />
