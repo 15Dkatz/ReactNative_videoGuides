@@ -45,7 +45,7 @@ module.exports = StyleSheet.create({
   },
 
   //topics section
-  topics: {
+  flexContainer: {
     flex: 1,
     backgroundColor: blue
   },
@@ -80,5 +80,16 @@ module.exports = StyleSheet.create({
   },
   rowTitle: {
     fontWeight: 'bold'
+  },
+
+  //details section
+  detailTitle: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  detailSubtitle: {
+    textAlign: 'center',
+    fontSize: 14
   }
 })
