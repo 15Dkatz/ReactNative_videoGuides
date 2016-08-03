@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import styles from '../../styles';
-import {firebaseApp} from './authentication';
+import { firebaseApp } from './authenticate';
 
 module.exports = React.createClass({
   getInitialState() {
@@ -19,23 +19,23 @@ module.exports = React.createClass({
     })
   },
 
+  //mounted Component throughout the whole application
   componentDidMount() {
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log('user', user);
-        this.props.navigator.push({name: 'topics'});
-        // navigate to our main application page.
+        this.props.navigator.push({
+          name: 'topics'
+        })
       }
-    })
+    });
   },
 
   signIn() {
-    let {email, password} = this.state;
-
+    console.log('attempting a sign in');
+    let { email, password } = this.state;
     firebaseApp.auth().signInWithEmailAndPassword(email, password)
       .catch(error => {
-        console.log('error:', error.message);
-        this.setState({result: error.message});
+        this.setState({result: error.message})
       })
   },
 
@@ -46,32 +46,49 @@ module.exports = React.createClass({
         <TextInput
           placeholder='Email'
           style={styles.input}
-          onChangeText={(text) => this.setState({email: text})}
+          onChangeText={(text)=>{
+            this.setState({
+              email: text
+            })
+          }}
         />
         <TextInput
           placeholder='Password'
           style={styles.input}
-          onChangeText={(text) => this.setState({password: text})}
           secureTextEntry={true}
+          onChangeText={(text)=>{
+            this.setState({
+              password: text
+            })
+          }}
         />
-        <TouchableOpacity style={styles.buttonContainer}
+        <TouchableOpacity
           onPress={() => this.signIn()}
+          style={styles.buttonContainer}
         >
           <Text style={styles.button}>Sign In</Text>
         </TouchableOpacity>
         <View style={styles.links}>
-          <TouchableOpacity>
-            <Text style={styles.link}>Forgot Password?</Text>
+          <TouchableOpacity
+            onPress={()=>{
+              this.props.navigator.push({
+                name: 'forgotPassword'
+              })
+            }}
+          >
+            <Text style={styles.link}>Forgot your password?</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => {
-              this.props.navigator.push({name: 'signUp'})
+            onPress={()=>{
+              this.props.navigator.push({
+                name: 'signUp'
+              })
             }}
-            >
+          >
             <Text style={styles.link}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>
-    )
+    );
   }
-})
+});

@@ -1,33 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
+  View,
   Text,
   TextInput,
-  View,
   TouchableOpacity
 } from 'react-native';
 
-import {firebaseApp} from './authentication';
 import styles from '../../styles';
+import {firebaseApp} from './authenticate';
 
 module.exports = React.createClass({
   getInitialState() {
-    return({
-      name: ''
+    return ({
+      name: '',
     })
   },
 
   updateDisplayName() {
+    // look at the current user state and update the display Name
     let user = firebaseApp.auth().currentUser;
     user.updateProfile({
-      displayName: this.state.name
+      displayName: this.state.name,
     }).then(() => {
       this.props.navigator.push({
         name: 'topics'
-      })
-    })
+      });
+    });
+    // navigate to topics
   },
 
   render() {
+    // give the user an input where they choose a displayName
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
@@ -38,8 +41,8 @@ module.exports = React.createClass({
           onChangeText={(text) => this.setState({name: text})}
         />
         <TouchableOpacity
-          style={styles.buttonContainer}
           onPress={() => this.updateDisplayName()}
+          style={styles.buttonContainer}
         >
           <Text style={styles.button}>
             Confirm
