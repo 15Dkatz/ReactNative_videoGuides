@@ -1,6 +1,4 @@
-# Course1_videoCode
-Project files created while recording.
-
+#React Native: Build Your Own Mobile Apps
 Hi everyone!
 
 Welcome to the source code for my course on React Native. 
