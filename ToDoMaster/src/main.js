@@ -29,6 +29,10 @@ module.exports = React.createClass({
       });
   },
 
+  componentDidUpdate() {
+    this.setStorage();
+  },
+
   setStorage() {
     AsyncStorage.setItem('tasks', JSON.stringify(this.state.tasks));
     AsyncStorage.setItem('completedTasks', JSON.stringify(this.state.completedTasks));
