@@ -17,7 +17,7 @@ const routes = {
   chooseName,
   forgotPassword,
   topics,
-  topicDetail,
+  topicDetail
 }
 
 module.exports = React.createClass({

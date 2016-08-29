@@ -6,7 +6,13 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "@google/maps": "^0.1.0",
+    "geocoder": "^0.2.2",
+    "google": "^2.1.0",
+    "google-locations": "^0.2.0",
     "react": "15.2.1",
-    "react-native": "^0.30.0"
+    "react-native": "^0.30.0",
+    "react-native-geocoder": "^0.4.4",
+    "react-native-google-places-autocomplete": "^1.2.2"
   }
 }

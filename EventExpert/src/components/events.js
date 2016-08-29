@@ -9,6 +9,9 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+// import geocoder from 'geocoder';
+import Geocoder from 'react-native-geocoder';
+
 const API_KEY = 'Bearer SZRBEN2CGEUPT57YVMXP';
 const ROOT_URL = 'https://www.eventbriteapi.com/v3/events/search/';
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1!==r2});
@@ -23,23 +26,67 @@ module.exports = React.createClass({
   },
 
   componentDidMount() {
-    // this.searchEvents('hackathon', 'San Francisco');
+    this.searchEvents('hackathon', 'San Francisco');
+    // console.log('GooglePlacesAutocomplete', GooglePlacesAutocomplete);
+  },
+
+  getCoordinates(city) {
+    Geocoder.geocodeAddress(city).then(res => {
+      console.log('res', res);
+      let position = res[0].position;
+      console.log('position', position);
+      return position;
+    })
   },
 
   searchEvents(category, city) {
-    const FETCH_URL = `${ROOT_URL}?q=${category}&venue.city=${city}/`;
 
-    fetch(FETCH_URL, {
-      method: 'GET',
-      headers: {
-        'Authorization': API_KEY
-      }
+    // let cityPosition = this.getCoordinates(city)
+
+
+    Geocoder.geocodeAddress(city).then(res => {
+      console.log('res', res);
+      let position = res[0].position;
+      console.log('position', position);
+      // return position;
+
+      let locationStr = `&location.latitude=${position.lat}&location.longitude=${position.lng}`
+      let FETCH_URL = `${ROOT_URL}?q=${category}`;
+      FETCH_URL += locationStr;
+
+      fetch(FETCH_URL, {
+        method: 'GET',
+        headers: {
+          'Authorization': API_KEY
+        }
+      })
+      .then((response) => response.json())
+      .then((responseJSON) => {
+        console.log('responseJSON', responseJSON);
+        this.setState({dataSource: ds.cloneWithRows(responseJSON.events)});
+      });
     })
-    .then((response) => response.json())
-    .then((responseJSON) => {
-      console.log('responseJSON', responseJSON);
-      this.setState({dataSource: ds.cloneWithRows(responseJSON.events)});
-    });
+    //   .then(() => {
+    //       console.log('cityPosition', cityPosition);
+    //   }
+    // );
+    // add city.lat and city.lon with https://github.com/FaridSafi/react-native-google-places-autocomplete
+    // fetch('https://maps.googleapis.com/maps/api/place/autocomplete/input=Paris&types=geocode')
+    //   .then((response) =>
+    //   // response.json()
+    //     console.log('response', response)
+    //   )
+      // .then((responseJSON) => {
+      //   console.log('autocomplete api', responseJSON);
+      // })
+
+    // city is now an object with two coordinates, with lat and lng
+
+
+
+
+    //pass the lat and long from the position in city
+
   },
 
   detail(rowData) {
@@ -110,6 +157,7 @@ module.exports = React.createClass({
         <ListView
           style={styles.list}
           dataSource={this.state.dataSource}
+          enableEmptySections={true}
           renderRow={(rowData) => this.renderRow(rowData)}
         />
       </View>
