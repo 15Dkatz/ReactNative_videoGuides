@@ -40,16 +40,10 @@ module.exports = React.createClass({
   },
 
   searchEvents(category, city) {
-
-    // let cityPosition = this.getCoordinates(city)
-
-
     Geocoder.geocodeAddress(city).then(res => {
       console.log('res', res);
       let position = res[0].position;
       console.log('position', position);
-      // return position;
-
       let locationStr = `&location.latitude=${position.lat}&location.longitude=${position.lng}`
       let FETCH_URL = `${ROOT_URL}?q=${category}`;
       FETCH_URL += locationStr;
@@ -66,27 +60,6 @@ module.exports = React.createClass({
         this.setState({dataSource: ds.cloneWithRows(responseJSON.events)});
       });
     })
-    //   .then(() => {
-    //       console.log('cityPosition', cityPosition);
-    //   }
-    // );
-    // add city.lat and city.lon with https://github.com/FaridSafi/react-native-google-places-autocomplete
-    // fetch('https://maps.googleapis.com/maps/api/place/autocomplete/input=Paris&types=geocode')
-    //   .then((response) =>
-    //   // response.json()
-    //     console.log('response', response)
-    //   )
-      // .then((responseJSON) => {
-      //   console.log('autocomplete api', responseJSON);
-      // })
-
-    // city is now an object with two coordinates, with lat and lng
-
-
-
-
-    //pass the lat and long from the position in city
-
   },
 
   detail(rowData) {

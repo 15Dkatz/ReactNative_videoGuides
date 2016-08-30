@@ -1,3 +1,4 @@
 rootProject.name = 'EventExpert'
 
-include ':app'
+include ':react-native-geocoder', ':app'
+project(':react-native-geocoder').projectDir = new File(rootProject.dir, '../node_modules/react-native-geocoder/android')
