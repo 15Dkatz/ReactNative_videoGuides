@@ -45,8 +45,7 @@ module.exports = React.createClass({
       let position = res[0].position;
       console.log('position', position);
       let locationStr = `&location.latitude=${position.lat}&location.longitude=${position.lng}`
-      let FETCH_URL = `${ROOT_URL}?q=${category}`;
-      FETCH_URL += locationStr;
+      let FETCH_URL = `${ROOT_URL}?q=${category}${locationStr}`;
 
       fetch(FETCH_URL, {
         method: 'GET',
