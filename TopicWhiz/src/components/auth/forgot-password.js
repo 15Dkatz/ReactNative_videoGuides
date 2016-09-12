@@ -20,7 +20,7 @@ module.exports = React.createClass({
       .then(() => {
         this.setState({result: 'Password reset sent successfully.'})
       }, (error) => {
-        this.setState({result: error})
+        this.setState({result: error.message})
       })
   },
 
